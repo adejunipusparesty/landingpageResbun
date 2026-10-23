@@ -1,0 +1,135 @@
+[
+    {
+        "name": "BPJS Kesehatan",
+        "file": "bpjs-kesehatan.png",
+        "path": "images\/partners\/bpjs-kesehatan.png",
+        "width": 197,
+        "height": 63
+    },
+    {
+        "name": "BNI Life",
+        "file": "bni-life.png",
+        "path": "images\/partners\/bni-life.png",
+        "width": 164,
+        "height": 91
+    },
+    {
+        "name": "BRI Life",
+        "file": "bri-life.png",
+        "path": "images\/partners\/bri-life.png",
+        "width": 187,
+        "height": 74
+    },
+    {
+        "name": "Meditap",
+        "file": "meditap.png",
+        "path": "images\/partners\/meditap.png",
+        "width": 215,
+        "height": 57
+    },
+    {
+        "name": "AdMedika",
+        "file": "admedika.png",
+        "path": "images\/partners\/admedika.png",
+        "width": 112,
+        "height": 93
+    },
+    {
+        "name": "Fullerton Health Indonesia",
+        "file": "fullerton-health.png",
+        "path": "images\/partners\/fullerton-health.png",
+        "width": 232,
+        "height": 83
+    },
+    {
+        "name": "Asuransi Cakrawala Proteksi",
+        "file": "cakrawala-proteksi.png",
+        "path": "images\/partners\/cakrawala-proteksi.png",
+        "width": 207,
+        "height": 81
+    },
+    {
+        "name": "Asuransi MAG",
+        "file": "asuransi-mag.png",
+        "path": "images\/partners\/asuransi-mag.png",
+        "width": 207,
+        "height": 61
+    },
+    {
+        "name": "KSK Insurance",
+        "file": "ksk-insurance.png",
+        "path": "images\/partners\/ksk-insurance.png",
+        "width": 185,
+        "height": 54
+    },
+    {
+        "name": "Dipo Star Finance",
+        "file": "dipo-star-finance.png",
+        "path": "images\/partners\/dipo-star-finance.png",
+        "width": 221,
+        "height": 49
+    },
+    {
+        "name": "Hanwha Life",
+        "file": "hanwha-life.png",
+        "path": "images\/partners\/hanwha-life.png",
+        "width": 197,
+        "height": 76
+    },
+    {
+        "name": "Global Excel",
+        "file": "global-excel.png",
+        "path": "images\/partners\/global-excel.png",
+        "width": 195,
+        "height": 75
+    },
+    {
+        "name": "Lippo Insurance",
+        "file": "lippo-insurance.png",
+        "path": "images\/partners\/lippo-insurance.png",
+        "width": 181,
+        "height": 61
+    },
+    {
+        "name": "PT Migas Mandiri Pratama",
+        "file": "migas-mandiri-pratama.png",
+        "path": "images\/partners\/migas-mandiri-pratama.png",
+        "width": 207,
+        "height": 64
+    },
+    {
+        "name": "PT Medilink Digital Medika",
+        "file": "medilink.png",
+        "path": "images\/partners\/medilink.png",
+        "width": 114,
+        "height": 110
+    },
+    {
+        "name": "CAR Life Insurance",
+        "file": "car-life.png",
+        "path": "images\/partners\/car-life.png",
+        "width": 168,
+        "height": 82
+    },
+    {
+        "name": "Kereta Api Indonesia (KAI)",
+        "file": "kai.png",
+        "path": "images\/partners\/kai.png",
+        "width": 127,
+        "height": 60
+    },
+    {
+        "name": "BSI Insurance",
+        "file": "bsi-insurance.png",
+        "path": "images\/partners\/bsi-insurance.png",
+        "width": 114,
+        "height": 95
+    },
+    {
+        "name": "PT Riung Mitra Lestari",
+        "file": "riung-mitra-lestari.png",
+        "path": "images\/partners\/riung-mitra-lestari.png",
+        "width": 167,
+        "height": 94
+    }
+]

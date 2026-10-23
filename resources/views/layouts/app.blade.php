@@ -273,7 +273,6 @@
                         <li><a href="#fasilitas" class="hover:text-white transition">Fasilitas Rawat Inap</a></li>
                         <li><a href="#artikel" class="hover:text-white transition">Artikel &amp; Edukasi Ibu</a></li>
                         <li><a href="{{ route('booking.check') }}" class="hover:text-white transition">Cek Status Janji Temu</a></li>
-                        <li><a href="{{ route('login') }}" class="hover:text-white transition">Portal Pegawai / Dokter</a></li>
                     </ul>
                 </div>
 

@@ -52,7 +52,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                             <i class="fa-regular fa-envelope text-xs"></i>
                         </div>
-                        <input type="email" id="emailInput" name="email" value="[EMAIL_ADDRESS]" required placeholder="Masukkan email Anda" class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition">
+                        <input type="email" id="emailInput" name="email" value="" required placeholder="Masukkan email Anda" class="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-xs font-medium text-slate-800 focus:bg-white focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 focus:outline-none transition">
                     </div>
                 </div>
 

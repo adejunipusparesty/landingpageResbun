@@ -196,9 +196,17 @@
             @yield('content')
         </main>
 
-        <!-- Admin Footer -->
-        <footer class="p-4 sm:p-8 pt-0 text-center text-xs text-slate-400">
-            RSIA Restu Bunda Management System &bull; Version 1.0 Laravel Edition
+        <!-- Admin Footer (Sticky / Frozen at Bottom) -->
+        <footer class="sticky bottom-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-4 sm:px-8 py-3 text-center text-xs text-slate-500 shadow-sm transition-all duration-200 flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span class="font-medium text-slate-600">RSIA Restu Bunda Management System</span>
+                <span class="hidden sm:inline text-slate-300">&bull;</span>
+                <span class="hidden sm:inline text-slate-400">v1.0 Laravel Edition</span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+                &copy; {{ date('Y') }} RSIA Restu Bunda. Seluruh hak cipta dilindungi.
+            </div>
         </footer>
     </div>
 

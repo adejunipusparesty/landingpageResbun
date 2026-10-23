@@ -6,7 +6,9 @@
     <title>@yield('title', 'RSIA Restu Bunda - Rumah Sakit Ibu & Anak Pilihan di Bandar Lampung')</title>
     <meta name="description" content="RSIA Restu Bunda - Pelayanan medis terbaik dan penuh kasih untuk ibu, bayi, dan anak tercinta sejak kehamilan hingga tumbuh kembang. Bandar Lampung.">
     
-    <!-- Google Fonts -->
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">

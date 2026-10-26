@@ -452,11 +452,32 @@
                     <p class="text-xs sm:text-sm text-emerald-100/70 leading-relaxed max-w-sm">
                         {{ $globalSettings['hospital_name'] ?? 'RSIA Restu Bunda' }} berdedikasi melayani seluruh keluarga dengan fasilitas modern dan dokter spesialis anak serta kebidanan yang berpengalaman dan ramah.
                     </p>
+                    @php
+                        $rawIg = trim($globalSettings['social_instagram'] ?? 'https://www.instagram.com/rsiarestubunda');
+                        $igUrl = (str_starts_with($rawIg, 'http://') || str_starts_with($rawIg, 'https://')) ? $rawIg : 'https://' . $rawIg;
+
+                        $rawFb = trim($globalSettings['social_facebook'] ?? 'https://www.facebook.com/rsiarestubunda');
+                        $fbUrl = (str_starts_with($rawFb, 'http://') || str_starts_with($rawFb, 'https://')) ? $rawFb : 'https://' . $rawFb;
+
+                        $rawYt = trim($globalSettings['social_youtube'] ?? ($globalSettings['hero_youtube_url'] ?? 'https://youtu.be/8lym0EG1VIw'));
+                        $ytUrl = (str_starts_with($rawYt, 'http://') || str_starts_with($rawYt, 'https://')) ? $rawYt : 'https://' . $rawYt;
+
+                        $rawWa = trim($globalSettings['social_whatsapp'] ?? ($globalSettings['whatsapp'] ?? '6281172345678'));
+                        if (str_starts_with($rawWa, 'http://') || str_starts_with($rawWa, 'https://')) {
+                            $waUrl = $rawWa;
+                        } else {
+                            $cleanPhone = preg_replace('/[^0-9]/', '', $rawWa);
+                            if (str_starts_with($cleanPhone, '0')) {
+                                $cleanPhone = '62' . substr($cleanPhone, 1);
+                            }
+                            $waUrl = 'https://wa.me/' . $cleanPhone;
+                        }
+                    @endphp
                     <div class="flex items-center gap-3 text-emerald-300 pt-2">
-                        <a href="#" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-youtube"></i></a>
-                        <a href="https://wa.me/{{ $globalSettings['whatsapp'] ?? '6281172345678' }}" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a href="{{ $igUrl }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition shadow-sm" title="Instagram Resmi RSIA Restu Bunda"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="{{ $fbUrl }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition shadow-sm" title="Facebook Resmi RSIA Restu Bunda"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="{{ $ytUrl }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition shadow-sm" title="YouTube Resmi RSIA Restu Bunda"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="{{ $waUrl }}" target="_blank" rel="noopener noreferrer" class="w-9 h-9 rounded-full bg-emerald-900/70 hover:bg-emerald-600 hover:text-white flex items-center justify-center transition shadow-sm" title="WhatsApp Customer Care RSIA Restu Bunda"><i class="fa-brands fa-whatsapp"></i></a>
                     </div>
                 </div>
 

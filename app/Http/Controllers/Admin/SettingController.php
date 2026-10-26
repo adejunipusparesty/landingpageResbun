@@ -38,6 +38,11 @@ class SettingController extends Controller
             // Hero Media
             'hero_media_type',
             'hero_youtube_url',
+            // Social Media Footer
+            'social_instagram',
+            'social_facebook',
+            'social_youtube',
+            'social_whatsapp',
             // Popup
             'popup_badge',
             'popup_title',

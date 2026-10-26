@@ -367,7 +367,56 @@
             </div>
         </div>
 
-        <!-- CARD 6: ANGKA STATISTIK HERO BAR -->
+        <!-- CARD 6: TAUTAN MEDIA SOSIAL RESMI (FOOTER WEBSITE) -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-pink-50 text-pink-600 flex items-center justify-center text-sm font-bold">
+                        <i class="fa-solid fa-share-nodes"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold font-heading text-slate-900">Media Sosial Resmi &amp; Tautan Footer</h3>
+                        <p class="text-[11px] text-slate-400">Pengunjung dapat mengklik ikon sosial media di bagian footer untuk mengunjungi akun resmi RSIA Restu Bunda.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1 text-xs sm:text-sm">
+                        <i class="fa-brands fa-instagram text-pink-600 mr-1.5 text-base"></i> Link Akun Instagram
+                    </label>
+                    <input type="url" name="social_instagram" value="{{ $settings['social_instagram'] ?? 'https://www.instagram.com/rsiarestubunda' }}" placeholder="https://www.instagram.com/username" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-brand-500 text-xs sm:text-sm font-medium">
+                    <p class="text-[11px] text-slate-400 mt-1">Contoh: <code class="text-brand-600 font-mono">https://www.instagram.com/rsiarestubunda</code></p>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1 text-xs sm:text-sm">
+                        <i class="fa-brands fa-facebook text-blue-600 mr-1.5 text-base"></i> Link Halaman Facebook
+                    </label>
+                    <input type="url" name="social_facebook" value="{{ $settings['social_facebook'] ?? 'https://www.facebook.com/rsiarestubunda' }}" placeholder="https://www.facebook.com/halaman" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-brand-500 text-xs sm:text-sm font-medium">
+                    <p class="text-[11px] text-slate-400 mt-1">Contoh: <code class="text-brand-600 font-mono">https://www.facebook.com/rsiarestubunda</code></p>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1 text-xs sm:text-sm">
+                        <i class="fa-brands fa-youtube text-red-600 mr-1.5 text-base"></i> Link Channel / Video YouTube
+                    </label>
+                    <input type="url" name="social_youtube" value="{{ $settings['social_youtube'] ?? 'https://youtu.be/8lym0EG1VIw?si=AmuIJB_cmkEPNqii' }}" placeholder="https://youtu.be/... atau https://www.youtube.com/@channel" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-brand-500 text-xs sm:text-sm font-medium">
+                    <p class="text-[11px] text-slate-400 mt-1">Contoh: <code class="text-brand-600 font-mono">https://youtu.be/8lym0EG1VIw</code> atau tautan channel resmi.</p>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1 text-xs sm:text-sm">
+                        <i class="fa-brands fa-whatsapp text-emerald-600 mr-1.5 text-base"></i> Link / Nomor WhatsApp Footer
+                    </label>
+                    <input type="text" name="social_whatsapp" value="{{ $settings['social_whatsapp'] ?? 'https://wa.me/6281172345678' }}" placeholder="https://wa.me/62811... atau 0811..." class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:border-brand-500 text-xs sm:text-sm font-medium">
+                    <p class="text-[11px] text-slate-400 mt-1">Bisa berupa tautan langsung (<code class="text-brand-600 font-mono">https://wa.me/62811...</code>) atau nomor HP biasa.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CARD 7: ANGKA STATISTIK HERO BAR -->
         <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200/80 space-y-4">
             <h3 class="text-sm font-bold font-heading text-slate-900 pb-2 border-b border-slate-100 flex items-center gap-2">
                 <i class="fa-solid fa-chart-simple text-brand-600"></i>

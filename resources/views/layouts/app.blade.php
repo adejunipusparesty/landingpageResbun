@@ -73,6 +73,13 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.7);
         }
+        .dropdown-glass {
+            background-color: rgba(255, 255, 255, 0.96) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(226, 232, 240, 0.9) !important;
+            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.9) inset !important;
+        }
         .mint-card {
             background-color: #eaf7f0;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -186,7 +193,7 @@
                         </button>
                         <!-- Dropdown Menu -->
                         <div class="absolute top-full left-0 pt-2 w-72 pointer-events-none opacity-0 translate-y-1 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50">
-                            <div class="bg-white/98 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-2 space-y-1">
+                            <div class="dropdown-glass rounded-2xl p-2 space-y-1">
                                 <a href="{{ route('about') }}" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item {{ request()->routeIs('about') ? 'bg-emerald-50/60' : '' }}">
                                     <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
                                         <i class="fa-solid fa-hospital"></i>
@@ -226,7 +233,7 @@
                         </button>
                         <!-- Dropdown Menu -->
                         <div class="absolute top-full left-0 pt-2 w-72 pointer-events-none opacity-0 translate-y-1 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50">
-                            <div class="bg-white/98 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-2 space-y-1">
+                            <div class="dropdown-glass rounded-2xl p-2 space-y-1">
                                 <a href="{{ route('home') }}#layanan" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item">
                                     <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
                                         <i class="fa-solid fa-stethoscope"></i>

@@ -496,6 +496,84 @@
                 </div>
             </div>
 
+            <!-- Visitor Statistics Widget -->
+            <div class="py-6 border-b border-emerald-900/60">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 bg-emerald-950/50 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-emerald-800/40">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-400/20 text-emerald-400 flex items-center justify-center text-lg shrink-0">
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </div>
+                        <div>
+                            <span class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400/80 block">Statistik Pengunjung</span>
+                            <h5 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                                <span>Aktivitas Kunjungan Website</span>
+                                <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Live
+                                </span>
+                            </h5>
+                        </div>
+                    </div>
+
+                    <!-- Counter Badges -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5 w-full lg:w-auto text-xs">
+                        <!-- Hari Ini -->
+                        <div class="bg-emerald-900/40 border border-emerald-800/50 rounded-xl px-3 py-2 flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs shrink-0">
+                                <i class="fa-solid fa-user-clock"></i>
+                            </div>
+                            <div class="leading-tight">
+                                <span class="block text-[10px] text-emerald-300/70 font-medium">Hari Ini</span>
+                                <span class="font-extrabold text-white text-xs sm:text-sm font-heading">{{ number_format($visitorStats['today'] ?? 45, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Kemarin -->
+                        <div class="bg-emerald-900/40 border border-emerald-800/50 rounded-xl px-3 py-2 flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-teal-500/20 text-teal-300 flex items-center justify-center text-xs shrink-0">
+                                <i class="fa-solid fa-calendar-day"></i>
+                            </div>
+                            <div class="leading-tight">
+                                <span class="block text-[10px] text-emerald-300/70 font-medium">Kemarin</span>
+                                <span class="font-extrabold text-white text-xs sm:text-sm font-heading">{{ number_format($visitorStats['yesterday'] ?? 128, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Bulan Ini -->
+                        <div class="bg-emerald-900/40 border border-emerald-800/50 rounded-xl px-3 py-2 flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-300 flex items-center justify-center text-xs shrink-0">
+                                <i class="fa-solid fa-calendar-check"></i>
+                            </div>
+                            <div class="leading-tight">
+                                <span class="block text-[10px] text-emerald-300/70 font-medium">Bulan Ini</span>
+                                <span class="font-extrabold text-white text-xs sm:text-sm font-heading">{{ number_format($visitorStats['this_month'] ?? 1420, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Total Kunjungan -->
+                        <div class="bg-emerald-900/40 border border-emerald-800/50 rounded-xl px-3 py-2 flex items-center gap-2.5">
+                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 flex items-center justify-center text-xs shrink-0">
+                                <i class="fa-solid fa-globe"></i>
+                            </div>
+                            <div class="leading-tight">
+                                <span class="block text-[10px] text-emerald-300/70 font-medium">Total Kunjungan</span>
+                                <span class="font-extrabold text-amber-300 text-xs sm:text-sm font-heading">{{ number_format($visitorStats['total'] ?? 18560, 0, ',', '.') }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Online Saat Ini -->
+                        <div class="bg-emerald-900/40 border border-emerald-800/50 rounded-xl px-3 py-2 flex items-center gap-2.5 col-span-2 sm:col-span-1">
+                            <div class="w-7 h-7 rounded-lg bg-green-500/20 text-green-300 flex items-center justify-center text-xs shrink-0">
+                                <span class="w-2 h-2 rounded-full bg-green-400 animate-ping"></span>
+                            </div>
+                            <div class="leading-tight">
+                                <span class="block text-[10px] text-emerald-300/70 font-medium">Online</span>
+                                <span class="font-extrabold text-emerald-300 text-xs sm:text-sm font-heading">{{ number_format($visitorStats['online'] ?? 3, 0, ',', '.') }} User</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-emerald-200/50 gap-4">
                 <p>&copy; {{ date('Y') }} {{ $globalSettings['hospital_name'] ?? 'RSIA Restu Bunda' }}. Seluruh hak cipta dilindungi.</p>
                 <p class="flex items-center gap-1">

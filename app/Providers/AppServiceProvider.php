@@ -39,5 +39,9 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Exception $e) {
             // Ignore during migrations
         }
+
+        View::composer('layouts.app', function ($view) {
+            $view->with('visitorStats', \App\Models\Visitor::trackAndGetStats());
+        });
     }
 }

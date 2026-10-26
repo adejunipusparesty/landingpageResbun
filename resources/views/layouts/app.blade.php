@@ -13,8 +13,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS CDN (with Typography Plugin) -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -80,6 +80,73 @@
             border: 1px solid rgba(226, 232, 240, 0.9) !important;
             box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.9) inset !important;
         }
+
+        /* Rich Text & Quill WYSIWYG Content (Lists, Bullets, Formatting) */
+        .prose ul, .rich-text ul {
+            list-style-type: disc !important;
+            list-style-position: outside !important;
+            padding-left: 1.5rem !important;
+            margin-top: 0.5rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .prose ol, .rich-text ol {
+            list-style-type: decimal !important;
+            list-style-position: outside !important;
+            padding-left: 1.5rem !important;
+            margin-top: 0.5rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        .prose li, .rich-text li {
+            display: list-item !important;
+            margin-top: 0.35rem !important;
+            margin-bottom: 0.35rem !important;
+            padding-left: 0.25rem !important;
+            line-height: 1.6 !important;
+        }
+        .prose p, .rich-text p {
+            margin-bottom: 0.6rem !important;
+            line-height: 1.65 !important;
+        }
+        .prose p:last-child, .rich-text p:last-child,
+        .prose ul:last-child, .rich-text ul:last-child,
+        .prose ol:last-child, .rich-text ol:last-child {
+            margin-bottom: 0 !important;
+        }
+        .prose strong, .rich-text strong,
+        .prose b, .rich-text b {
+            font-weight: 700 !important;
+            color: inherit !important;
+        }
+        .prose em, .rich-text em,
+        .prose i, .rich-text i {
+            font-style: italic !important;
+        }
+        .prose u, .rich-text u {
+            text-decoration: underline !important;
+        }
+        .prose s, .rich-text s {
+            text-decoration: line-through !important;
+        }
+        .prose blockquote, .rich-text blockquote {
+            border-left: 4px solid #16a34a !important;
+            padding-left: 1rem !important;
+            font-style: italic !important;
+            color: #475569 !important;
+            margin: 0.85rem 0 !important;
+        }
+        .prose h1, .rich-text h1 { font-size: 1.75rem !important; font-weight: 800 !important; margin: 1rem 0 0.5rem !important; }
+        .prose h2, .rich-text h2 { font-size: 1.5rem !important; font-weight: 700 !important; margin: 0.85rem 0 0.4rem !important; }
+        .prose h3, .rich-text h3 { font-size: 1.25rem !important; font-weight: 700 !important; margin: 0.75rem 0 0.35rem !important; }
+        .prose h4, .rich-text h4 { font-size: 1.1rem !important; font-weight: 700 !important; margin: 0.65rem 0 0.3rem !important; }
+
+        /* Quill align & indent helpers */
+        .ql-align-center, .prose .ql-align-center, .rich-text .ql-align-center { text-align: center !important; }
+        .ql-align-right, .prose .ql-align-right, .rich-text .ql-align-right { text-align: right !important; }
+        .ql-align-justify, .prose .ql-align-justify, .rich-text .ql-align-justify { text-align: justify !important; }
+        .ql-indent-1, .prose .ql-indent-1, .rich-text .ql-indent-1 { padding-left: 2rem !important; }
+        .ql-indent-2, .prose .ql-indent-2, .rich-text .ql-indent-2 { padding-left: 4rem !important; }
+        .ql-indent-3, .prose .ql-indent-3, .rich-text .ql-indent-3 { padding-left: 6rem !important; }
+
         .mint-card {
             background-color: #eaf7f0;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);

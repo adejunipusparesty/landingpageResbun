@@ -49,7 +49,7 @@
                         <span class="text-emerald-400 text-xs font-bold uppercase tracking-wider block">Visi Kami</span>
                         <h2 class="text-2xl sm:text-3xl font-black font-heading text-white mt-1">Arah &amp; Cita-Cita</h2>
                     </div>
-                    <div class="text-sm sm:text-base text-emerald-100/90 leading-relaxed pt-2 font-medium">
+                    <div class="rich-text text-sm sm:text-base text-emerald-100/90 leading-relaxed pt-2 font-medium">
                         {!! $settings['about_vision'] ?? 'Menjadi Rumah Sakit Ibu dan Anak terdepan, unggul, dan terpercaya di Provinsi Lampung dengan standar pelayanan medis modern bernuansa kekeluargaan.' !!}
                     </div>
                 </div>
@@ -70,7 +70,7 @@
                         <span class="text-brand-600 text-xs font-bold uppercase tracking-wider block">Misi Kami</span>
                         <h2 class="text-2xl sm:text-3xl font-black font-heading text-slate-900 mt-1">Langkah Nyata Pelayanan</h2>
                     </div>
-                    <div class="prose prose-sm prose-emerald text-slate-700 leading-relaxed pt-2">
+                    <div class="prose prose-sm prose-emerald rich-text text-slate-700 leading-relaxed pt-2">
                         {!! $settings['about_mission'] ?? '<ul><li>Memberikan pelayanan kesehatan ibu, bayi, dan anak yang profesional dan komprehensif.</li><li>Mengembangkan fasilitas medis modern berbasis teknologi terdepan.</li><li>Mewujudkan lingkungan ramah anak yang menenangkan.</li></ul>' !!}
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                     <span class="text-brand-600 text-xs font-bold uppercase tracking-wider">Nilai-Nilai Luhur</span>
                     <h3 class="text-xl sm:text-2xl font-black text-slate-900 font-heading">Budaya Pelayanan RSIA Restu Bunda</h3>
                 </div>
-                <div class="prose prose-sm prose-emerald max-w-4xl mx-auto text-slate-700 leading-relaxed text-center sm:text-left">
+                <div class="prose prose-sm prose-emerald rich-text max-w-4xl mx-auto text-slate-700 leading-relaxed text-left">
                     {!! $settings['about_core_values'] !!}
                 </div>
             </div>
@@ -144,7 +144,7 @@
                     </h2>
                 </div>
 
-                <div class="prose prose-sm sm:prose-base prose-emerald text-slate-600 leading-relaxed">
+                <div class="prose prose-sm sm:prose-base prose-emerald rich-text text-slate-600 leading-relaxed">
                     {!! $settings['about_history'] ?? '<p>RSIA Restu Bunda berawal dari komitmen tulus mendampingi para ibu melahirkan dengan aman, nyaman, dan penuh kehangatan keluarga di Kota Bandar Lampung.</p>' !!}
                 </div>
 
@@ -210,7 +210,7 @@
 
                         <!-- Bio / Quote -->
                         @if($dir->bio)
-                            <div class="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-200/70 mt-3 prose prose-xs">
+                            <div class="text-xs text-slate-600 leading-relaxed pt-3 border-t border-slate-200/70 mt-3 prose prose-xs rich-text">
                                 {!! $dir->bio !!}
                             </div>
                         @endif

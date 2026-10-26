@@ -172,16 +172,94 @@
                     <img src="{{ asset('images/logo.png') }}" alt="RSIA Restu Bunda" class="h-12 sm:h-14 w-auto object-contain group-hover:scale-105 transition duration-200">
                 </a>
 
-                <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-7 text-sm font-semibold text-slate-600">
-                    <a href="{{ route('home') }}#beranda" class="hover:text-brand-600 transition">Beranda</a>
-                    <a href="{{ route('about') }}" class="hover:text-brand-600 transition {{ request()->routeIs('about') ? 'text-brand-600 font-bold' : '' }}">Tentang Kami</a>
-                    <a href="{{ route('home') }}#layanan" class="hover:text-brand-600 transition">Layanan</a>
-                    <a href="{{ route('home') }}#dokter" class="hover:text-brand-600 transition">Dokter</a>
-                    <a href="{{ route('home') }}#fasilitas" class="hover:text-brand-600 transition">Fasilitas</a>
-                    <a href="{{ route('gallery') }}" class="hover:text-brand-600 transition {{ request()->routeIs('gallery') ? 'text-brand-600 font-bold' : '' }}">Galeri</a>
-                    <a href="{{ route('home') }}#artikel" class="hover:text-brand-600 transition">Artikel</a>
-                    <a href="{{ route('home') }}#kontak" class="hover:text-brand-600 transition">Kontak</a>
+                <!-- Desktop Navigation Links (Grouped with Modern Dropdowns) -->
+                <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8 text-sm font-semibold text-slate-600">
+                    <a href="{{ route('home') }}#beranda" class="hover:text-brand-600 transition py-2 {{ request()->routeIs('home') && !request()->routeIs('about') && !request()->routeIs('gallery') ? 'text-brand-600' : '' }}">
+                        Beranda
+                    </a>
+
+                    <!-- Dropdown: Profil RSIA -->
+                    <div class="relative group py-2">
+                        <button type="button" class="flex items-center gap-1.5 hover:text-brand-600 transition focus:outline-none {{ (request()->routeIs('about') || request()->routeIs('gallery')) ? 'text-brand-600 font-bold' : '' }}">
+                            <span>Profil RSIA</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-brand-600 group-hover:rotate-180 transition-transform duration-200"></i>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="absolute top-full left-0 pt-2 w-72 pointer-events-none opacity-0 translate-y-1 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50">
+                            <div class="bg-white/98 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-2 space-y-1">
+                                <a href="{{ route('about') }}" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item {{ request()->routeIs('about') ? 'bg-emerald-50/60' : '' }}">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
+                                        <i class="fa-solid fa-hospital"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-800 group-hover/item:text-brand-600 transition">Tentang Kami</div>
+                                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Visi, misi, moto &amp; sejarah RSIA</p>
+                                    </div>
+                                </a>
+                                <a href="{{ route('about') }}#direksi" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
+                                        <i class="fa-solid fa-user-tie"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-800 group-hover/item:text-brand-600 transition">Jajaran Direksi</div>
+                                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Dewan pimpinan &amp; manajemen</p>
+                                    </div>
+                                </a>
+                                <a href="{{ route('gallery') }}" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item {{ request()->routeIs('gallery') ? 'bg-emerald-50/60' : '' }}">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
+                                        <i class="fa-solid fa-images"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-800 group-hover/item:text-brand-600 transition">Galeri &amp; Suasana</div>
+                                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Foto fasilitas &amp; dokumentasi kegiatan</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown: Layanan & Medis -->
+                    <div class="relative group py-2">
+                        <button type="button" class="flex items-center gap-1.5 hover:text-brand-600 transition focus:outline-none">
+                            <span>Layanan &amp; Medis</span>
+                            <i class="fa-solid fa-chevron-down text-[10px] text-slate-400 group-hover:text-brand-600 group-hover:rotate-180 transition-transform duration-200"></i>
+                        </button>
+                        <!-- Dropdown Menu -->
+                        <div class="absolute top-full left-0 pt-2 w-72 pointer-events-none opacity-0 translate-y-1 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50">
+                            <div class="bg-white/98 backdrop-blur-xl rounded-2xl shadow-xl shadow-slate-900/10 border border-slate-100 p-2 space-y-1">
+                                <a href="{{ route('home') }}#layanan" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
+                                        <i class="fa-solid fa-stethoscope"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-800 group-hover/item:text-brand-600 transition">Layanan Unggulan</div>
+                                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Poli spesialis ibu, anak &amp; IGD 24 jam</p>
+                                    </div>
+                                </a>
+                                <a href="{{ route('home') }}#dokter" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-800 group-hover/item:text-brand-600 transition">Jadwal &amp; Tim Dokter</div>
+                                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Dokter spesialis kandungan &amp; anak</p>
+                                    </div>
+                                </a>
+                                <a href="{{ route('home') }}#fasilitas" class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-emerald-50/70 transition group/item">
+                                    <div class="w-9 h-9 rounded-xl bg-emerald-100/70 text-brand-600 flex items-center justify-center text-sm shrink-0 group-hover/item:bg-brand-600 group-hover/item:text-white transition duration-200">
+                                        <i class="fa-solid fa-bed-pulse"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-slate-800 group-hover/item:text-brand-600 transition">Fasilitas Rawat Inap</div>
+                                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">Kamar rawat nyaman, lab &amp; farmasi</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('home') }}#artikel" class="hover:text-brand-600 transition py-2">Artikel</a>
+                    <a href="{{ route('home') }}#kontak" class="hover:text-brand-600 transition py-2">Kontak</a>
                 </nav>
 
                 <!-- Actions: Call & Booking CTA -->
@@ -213,20 +291,70 @@
         </div>
 
         <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-5 space-y-2">
-            <a href="{{ route('home') }}#beranda" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Beranda</a>
-            <a href="{{ route('about') }}" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Tentang Kami &amp; Direksi</a>
-            <a href="{{ route('home') }}#layanan" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Layanan Medis</a>
-            <a href="{{ route('home') }}#dokter" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Dokter Spesialis</a>
-            <a href="{{ route('home') }}#fasilitas" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Fasilitas Rawat</a>
-            <a href="{{ route('gallery') }}" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Galeri Foto</a>
-            <a href="{{ route('home') }}#artikel" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Artikel Kesehatan</a>
-            <a href="{{ route('home') }}#kontak" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Lokasi &amp; Kontak</a>
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-6 space-y-3">
+            <a href="{{ route('home') }}#beranda" class="flex items-center gap-3 py-2 text-sm font-bold text-slate-700 hover:text-brand-600">
+                <span class="w-7 h-7 rounded-lg bg-emerald-50 text-brand-600 flex items-center justify-center text-xs">
+                    <i class="fa-solid fa-house"></i>
+                </span>
+                Beranda
+            </a>
+
+            <!-- Group 1: Profil RSIA -->
+            <div class="border-t border-slate-100 pt-3">
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Profil RSIA</span>
+                <div class="mt-1 space-y-1">
+                    <a href="{{ route('about') }}" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition {{ request()->routeIs('about') ? 'text-brand-600 bg-emerald-50/50' : '' }}">
+                        <i class="fa-solid fa-hospital text-brand-600 text-xs w-4 text-center"></i>
+                        <span>Tentang Kami (Visi, Misi &amp; Sejarah)</span>
+                    </a>
+                    <a href="{{ route('about') }}#direksi" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-user-tie text-brand-600 text-xs w-4 text-center"></i>
+                        <span>Jajaran Direksi &amp; Manajemen</span>
+                    </a>
+                    <a href="{{ route('gallery') }}" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition {{ request()->routeIs('gallery') ? 'text-brand-600 bg-emerald-50/50' : '' }}">
+                        <i class="fa-solid fa-images text-brand-600 text-xs w-4 text-center"></i>
+                        <span>Galeri &amp; Dokumentasi Foto</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Group 2: Layanan & Medis -->
+            <div class="border-t border-slate-100 pt-3">
+                <span class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-1">Layanan &amp; Medis</span>
+                <div class="mt-1 space-y-1">
+                    <a href="{{ route('home') }}#layanan" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-stethoscope text-brand-600 text-xs w-4 text-center"></i>
+                        <span>Layanan Unggulan &amp; Poliklinik</span>
+                    </a>
+                    <a href="{{ route('home') }}#dokter" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-user-doctor text-brand-600 text-xs w-4 text-center"></i>
+                        <span>Jadwal &amp; Tim Dokter</span>
+                    </a>
+                    <a href="{{ route('home') }}#fasilitas" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition">
+                        <i class="fa-solid fa-bed-pulse text-brand-600 text-xs w-4 text-center"></i>
+                        <span>Fasilitas Rawat Inap &amp; Kamar</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Group 3: Artikel & Kontak -->
+            <div class="border-t border-slate-100 pt-2 space-y-1">
+                <a href="{{ route('home') }}#artikel" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition">
+                    <i class="fa-solid fa-newspaper text-emerald-500 text-xs w-4 text-center"></i>
+                    <span>Artikel Kesehatan</span>
+                </a>
+                <a href="{{ route('home') }}#kontak" class="flex items-center gap-3 py-1.5 px-2 rounded-lg text-xs font-bold text-slate-700 hover:bg-emerald-50 hover:text-brand-600 transition">
+                    <i class="fa-solid fa-location-dot text-emerald-500 text-xs w-4 text-center"></i>
+                    <span>Lokasi &amp; Kontak</span>
+                </a>
+            </div>
+
+            <!-- Actions -->
             <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
-                <a href="#quick-booking" class="w-full text-center py-2.5 rounded-xl bg-brand-600 text-white font-bold text-xs uppercase">
+                <a href="#quick-booking" class="w-full text-center py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs uppercase tracking-wider shadow-md shadow-brand-600/20 transition">
                     Buat Janji Temu Pasien
                 </a>
-                <a href="{{ route('booking.check') }}" class="w-full text-center py-2 rounded-xl border border-slate-200 text-slate-700 font-semibold text-xs">
+                <a href="{{ route('booking.check') }}" class="w-full text-center py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition">
                     Cek Status Janji Temu
                 </a>
             </div>
@@ -429,6 +557,11 @@
         document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
+        });
+        document.querySelectorAll('#mobile-menu a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu')?.classList.add('hidden');
+            });
         });
 
         // Doctor modal selector helper

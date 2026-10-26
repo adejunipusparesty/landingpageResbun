@@ -127,19 +127,86 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Hero Image with Asymmetrical Arched Border & Floating Badge -->
-                <div class="lg:col-span-5 flex justify-center" data-aos="zoom-in" data-aos-delay="200">
+                @php
+                    $heroMediaType = $settings['hero_media_type'] ?? 'both';
+                    $heroYoutubeUrl = $settings['hero_youtube_url'] ?? 'https://youtu.be/8lym0EG1VIw?si=AmuIJB_cmkEPNqii';
+                    $youtubeId = '8lym0EG1VIw';
+                    if (preg_match('%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/\s]{11})%i', $heroYoutubeUrl, $match)) {
+                        $youtubeId = $match[1];
+                    } elseif (strlen(trim($heroYoutubeUrl)) == 11) {
+                        $youtubeId = trim($heroYoutubeUrl);
+                    }
+                @endphp
+
+                <!-- Right Column: Hero Visual (Interactive Photo & YouTube Video) -->
+                <div class="lg:col-span-5 flex flex-col items-center" data-aos="zoom-in" data-aos-delay="200">
                     <div class="relative w-full max-w-md lg:max-w-none">
-                        <!-- Decorative Frame Behind with subtle rotation -->
-                        <div class="absolute -inset-3 bg-gradient-to-tr from-brand-300 to-emerald-100 hero-arch transform -rotate-1 opacity-70 blur-sm animate-pulse"></div>
                         
-                        <!-- Main Photo Container -->
-                        <div class="relative overflow-hidden hero-arch shadow-2xl border-4 border-white aspect-[4/3] lg:aspect-[5/4] bg-emerald-50 group">
-                            <img src="{{ asset('images/hero.jpg') }}" alt="Pemeriksaan Pediatrik Penuh Kasih di RSIA Restu Bunda" class="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-700 ease-out">
+                        @if($heroMediaType == 'both')
+                            <!-- Media Switcher Tab Pills -->
+                            <div class="flex items-center justify-center mb-3">
+                                <div class="inline-flex items-center p-1 rounded-full bg-white/95 backdrop-blur-md shadow-md border border-emerald-200/80 text-xs font-bold">
+                                    <button type="button" id="btn-hero-photo" onclick="switchHeroMedia('photo')" class="px-3.5 py-1.5 rounded-full bg-brand-600 text-white shadow-sm flex items-center gap-1.5 transition duration-200">
+                                        <i class="fa-solid fa-camera"></i>
+                                        <span>Foto Resepsionis</span>
+                                    </button>
+                                    <button type="button" id="btn-hero-video" onclick="switchHeroMedia('video')" class="px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition duration-200">
+                                        <i class="fa-brands fa-youtube text-red-500"></i>
+                                        <span>Video Profil</span>
+                                    </button>
+                                </div>
+                            </div>
+                        @endif
+
+                        <!-- Decorative Frame Behind with subtle rotation -->
+                        <div class="absolute -inset-3 bg-gradient-to-tr from-brand-300 to-emerald-100 hero-arch transform -rotate-1 opacity-70 blur-sm animate-pulse pointer-events-none"></div>
+                        
+                        <!-- Main Media Container -->
+                        <div class="relative overflow-hidden hero-arch shadow-2xl border-4 border-white aspect-[4/3] lg:aspect-[5/4] bg-slate-950 group">
+                            
+                            <!-- 1. PHOTO VIEW -->
+                            <div id="hero-photo-wrapper" class="w-full h-full relative {{ $heroMediaType == 'video' ? 'hidden' : 'block' }}">
+                                <img src="{{ asset('images/' . ($settings['hero_image'] ?? 'hero.jpg')) }}?v={{ time() }}" alt="Pemeriksaan Pediatrik Penuh Kasih di RSIA Restu Bunda" class="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-700 ease-out">
+                                
+                                @if($heroMediaType == 'both')
+                                    <!-- Play Video Overlay Button -->
+                                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-black/20 to-transparent flex items-center justify-center">
+                                        <button type="button" onclick="switchHeroMedia('video')" class="group/play flex flex-col items-center gap-2 text-white transform hover:scale-110 active:scale-95 transition duration-300 focus:outline-none" title="Putar Video Profil RSIA">
+                                            <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-white/95 backdrop-blur-md text-emerald-600 flex items-center justify-center shadow-2xl shadow-emerald-950/50 pulse-glow group-hover/play:bg-brand-600 group-hover/play:text-white transition duration-300 pl-1">
+                                                <i class="fa-solid fa-play text-xl sm:text-2xl"></i>
+                                            </div>
+                                            <span class="px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md text-white text-[11px] font-bold tracking-wide uppercase shadow-lg border border-white/20 group-hover/play:bg-emerald-600 transition">
+                                                <i class="fa-brands fa-youtube text-red-400 mr-1"></i> Tonton Video Profil
+                                            </span>
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- 2. YOUTUBE VIDEO VIEW -->
+                            <div id="hero-video-wrapper" class="w-full h-full relative bg-slate-950 {{ $heroMediaType == 'video' ? 'block' : 'hidden' }}">
+                                <iframe id="hero-youtube-iframe" 
+                                        src="{{ $heroMediaType == 'video' ? 'https://www.youtube-nocookie.com/embed/' . $youtubeId . '?autoplay=1&rel=0&modestbranding=1' : '' }}" 
+                                        data-src="https://www.youtube-nocookie.com/embed/{{ $youtubeId }}?autoplay=1&rel=0&modestbranding=1"
+                                        title="Video Profil RSIA Restu Bunda" 
+                                        class="w-full h-full border-0 absolute inset-0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                        allowfullscreen>
+                                </iframe>
+
+                                @if($heroMediaType == 'both')
+                                    <!-- Back to Photo Button -->
+                                    <button type="button" onclick="switchHeroMedia('photo')" class="absolute top-3 left-3 z-30 px-3 py-1.5 rounded-full bg-slate-900/80 hover:bg-slate-900 text-white text-[11px] font-bold backdrop-blur-md shadow-md border border-white/20 flex items-center gap-1.5 transition">
+                                        <i class="fa-solid fa-camera text-xs"></i>
+                                        <span>Kembali ke Foto</span>
+                                    </button>
+                                @endif
+                            </div>
+
                         </div>
 
                         <!-- Floating Micro Badge with Micro Animation -->
-                        <div data-aos="zoom-in" data-aos-delay="400" class="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-emerald-100 flex items-center gap-3 animate-float-slow">
+                        <div data-aos="zoom-in" data-aos-delay="400" class="absolute -bottom-4 -left-4 bg-white/95 backdrop-blur-md rounded-2xl p-3.5 shadow-xl border border-emerald-100 flex items-center gap-3 animate-float-slow z-20 pointer-events-none">
                             <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-lg shadow-sm">
                                 <i class="fa-solid fa-heart-pulse"></i>
                             </div>
@@ -150,7 +217,7 @@
                         </div>
 
                         <!-- Secondary Floating Badge (Top-Right) -->
-                        <div class="absolute -top-3 -right-3 bg-emerald-900/90 backdrop-blur-md text-white rounded-2xl px-3.5 py-2 shadow-lg flex items-center gap-2 animate-float-reverse">
+                        <div class="absolute -top-3 -right-3 bg-emerald-900/90 backdrop-blur-md text-white rounded-2xl px-3.5 py-2 shadow-lg flex items-center gap-2 animate-float-reverse z-20 pointer-events-none">
                             <i class="fa-solid fa-shield-heart text-emerald-400 text-sm"></i>
                             <span class="text-[11px] font-extrabold tracking-wide">IGD 24 Jam Siaga</span>
                         </div>
@@ -1326,6 +1393,42 @@
         document.addEventListener('DOMContentLoaded', initDoctorSlider);
     } else {
         initDoctorSlider();
+    }
+
+    // Hero Media Switcher (Photo <-> YouTube Video)
+    function switchHeroMedia(type) {
+        const photoWrapper = document.getElementById('hero-photo-wrapper');
+        const videoWrapper = document.getElementById('hero-video-wrapper');
+        const iframe = document.getElementById('hero-youtube-iframe');
+        const btnPhoto = document.getElementById('btn-hero-photo');
+        const btnVideo = document.getElementById('btn-hero-video');
+
+        if (type === 'video') {
+            if (photoWrapper) photoWrapper.classList.add('hidden');
+            if (videoWrapper) videoWrapper.classList.remove('hidden');
+
+            if (iframe && (!iframe.src || iframe.src === 'about:blank' || iframe.src === window.location.href)) {
+                iframe.src = iframe.getAttribute('data-src');
+            }
+
+            if (btnPhoto && btnVideo) {
+                btnPhoto.className = 'px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition duration-200';
+                btnVideo.className = 'px-3.5 py-1.5 rounded-full bg-brand-600 text-white shadow-sm flex items-center gap-1.5 transition duration-200';
+            }
+        } else {
+            if (videoWrapper) videoWrapper.classList.add('hidden');
+            if (photoWrapper) photoWrapper.classList.remove('hidden');
+
+            // Pause playback by unsetting src
+            if (iframe) {
+                iframe.src = '';
+            }
+
+            if (btnPhoto && btnVideo) {
+                btnPhoto.className = 'px-3.5 py-1.5 rounded-full bg-brand-600 text-white shadow-sm flex items-center gap-1.5 transition duration-200';
+                btnVideo.className = 'px-3.5 py-1.5 rounded-full text-slate-600 hover:text-slate-900 flex items-center gap-1.5 transition duration-200';
+            }
+        }
     }
 </script>
 @endpush

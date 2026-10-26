@@ -35,6 +35,9 @@ class SettingController extends Controller
             'topbar_address',
             'topbar_address_url',
             'topbar_service_hours',
+            // Hero Media
+            'hero_media_type',
+            'hero_youtube_url',
             // Popup
             'popup_badge',
             'popup_title',

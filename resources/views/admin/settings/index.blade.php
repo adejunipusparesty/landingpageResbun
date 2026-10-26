@@ -81,6 +81,50 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Media Mode & Video YouTube Settings -->
+            <div class="pt-5 border-t border-slate-100 space-y-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-800">
+                        Opsi Tampilan Media Hero Utama (Video YouTube / Foto)
+                    </h4>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- Option 1: Mode Tampilan -->
+                    <div class="p-4 rounded-2xl bg-emerald-50/60 border border-emerald-200/70 space-y-3">
+                        <label class="block font-bold text-slate-800 text-xs uppercase tracking-wider">
+                            <i class="fa-solid fa-sliders text-brand-600 mr-1"></i> Mode Media Utama
+                        </label>
+                        <select name="hero_media_type" class="w-full p-3 rounded-xl border border-slate-200 bg-white font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs">
+                            <option value="both" {{ ($settings['hero_media_type'] ?? 'both') == 'both' ? 'selected' : '' }}>
+                                ✨ Kombinasi (Foto &amp; Tombol Switch Video Profil) — Rekomendasi
+                            </option>
+                            <option value="video" {{ ($settings['hero_media_type'] ?? '') == 'video' ? 'selected' : '' }}>
+                                🎬 Video YouTube Langsung (Prioritas Video)
+                            </option>
+                            <option value="image" {{ ($settings['hero_media_type'] ?? '') == 'image' ? 'selected' : '' }}>
+                                📷 Hanya Foto Resepsionis (Gambar Saja)
+                            </option>
+                        </select>
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            Jika memilih <strong>Kombinasi</strong>, pengunjung dapat melihat foto resepsionis sekaligus menekan tombol <em>Putar Video Profil</em> secara interaktif.
+                        </p>
+                    </div>
+
+                    <!-- Option 2: Link Video YouTube -->
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                        <label class="block font-bold text-slate-800 text-xs uppercase tracking-wider">
+                            <i class="fa-brands fa-youtube text-red-500 mr-1"></i> Link / URL Video YouTube
+                        </label>
+                        <input type="text" name="hero_youtube_url" value="{{ $settings['hero_youtube_url'] ?? 'https://youtu.be/8lym0EG1VIw?si=AmuIJB_cmkEPNqii' }}" placeholder="Contoh: https://youtu.be/8lym0EG1VIw" class="w-full p-3 rounded-xl border border-slate-200 bg-white font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500 text-xs">
+                        <p class="text-[11px] text-slate-500 leading-relaxed">
+                            Mendukung format link pendek (<code class="text-brand-700 bg-slate-200/60 px-1 py-0.5 rounded">youtu.be/...</code>) maupun link browser (<code class="text-brand-700 bg-slate-200/60 px-1 py-0.5 rounded">youtube.com/watch?v=...</code>).
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- CARD 2: TOP EMERGENCY INFO BAR -->

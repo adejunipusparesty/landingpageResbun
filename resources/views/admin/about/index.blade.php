@@ -14,9 +14,9 @@
                 <i class="fa-solid fa-hospital"></i> Profil Institusi
             </span>
             <h2 class="text-xl sm:text-2xl font-black font-heading tracking-tight">Profil, Visi Misi, Sejarah &amp; Direksi</h2>
-            <p class="text-xs sm:text-sm text-emerald-100/80 mt-1 leading-relaxed">
+            <!-- <p class="text-xs sm:text-sm text-emerald-100/80 mt-1 leading-relaxed">
                 Kelola informasi resmi identitas rumah sakit. Seluruh inputan narasi telah dilengkapi <strong>Rich Text Editor (format email: Bold, Miring, Bullet list, Heading, Warna)</strong> agar tampil indah di website publik.
-            </p>
+            </p> -->
         </div>
     </div>
 

@@ -198,7 +198,7 @@
                 <div class="text-3xl sm:text-4xl font-black font-heading text-brand-dark mb-1">
                     {{ $settings['stat_accreditation'] ?? 'Paripurna' }}
                 </div>
-                <div class="text-sm font-bold text-slate-800">Akreditasi KARS</div>
+                <div class="text-sm font-bold text-slate-800">Akreditasi LARS</div>
                 <div class="text-xs text-slate-500 mt-1">Terakreditasi Bintang 5 Resmi</div>
             </div>
         </div>

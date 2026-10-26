@@ -10,6 +10,8 @@ use App\Models\Article;
 use App\Models\Appointment;
 use App\Models\Testimonial;
 use App\Models\Setting;
+use App\Models\Director;
+use App\Models\Gallery;
 
 class HomeController extends Controller
 {
@@ -20,10 +22,32 @@ class HomeController extends Controller
         $facilities = Facility::where('is_active', true)->orderBy('order_num')->get();
         $testimonials = Testimonial::where('is_approved', true)->orderBy('order_num')->get();
         $articles = Article::where('is_published', true)->orderBy('published_at', 'desc')->take(3)->get();
+        $galleries = Gallery::where('is_active', true)->orderBy('order_num')->latest()->take(6)->get();
         
         $settings = Setting::pluck('value', 'key')->toArray();
 
-        return view('home', compact('doctors', 'services', 'facilities', 'testimonials', 'articles', 'settings'));
+        return view('home', compact('doctors', 'services', 'facilities', 'testimonials', 'articles', 'galleries', 'settings'));
+    }
+
+    public function about()
+    {
+        $settings = Setting::pluck('value', 'key')->toArray();
+        $directors = Director::where('is_active', true)->orderBy('order_num')->get();
+        $facilities = Facility::where('is_active', true)->orderBy('order_num')->take(4)->get();
+        return view('about', compact('settings', 'directors', 'facilities'));
+    }
+
+    public function gallery(Request $request)
+    {
+        $currentCategory = $request->input('category', 'all');
+        $query = Gallery::where('is_active', true);
+        if ($currentCategory && $currentCategory !== 'all') {
+            $query->where('category', $currentCategory);
+        }
+        $galleries = $query->orderBy('order_num')->latest()->paginate(12);
+        $categories = Gallery::where('is_active', true)->select('category')->distinct()->pluck('category')->toArray();
+
+        return view('gallery', compact('galleries', 'categories', 'currentCategory'));
     }
 
     public function bookAppointment(Request $request)

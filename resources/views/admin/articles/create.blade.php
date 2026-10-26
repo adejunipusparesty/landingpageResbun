@@ -81,8 +81,9 @@
             </div>
 
             <div>
-                <label class="block font-bold text-slate-700 mb-1">Konten Lengkap Artikel (Mendukung HTML &lt;p&gt;, &lt;h3&gt;, dll)</label>
-                <textarea name="content" rows="8" required placeholder="Tuliskan isi artikel edukasi kesehatan secara komprehensif..." class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none font-mono"></textarea>
+                <label class="block font-bold text-slate-700 mb-1">Konten Lengkap Artikel (Format Email: Bold, Miring, Bullet List, dll)</label>
+                <input type="hidden" name="content" id="article_content">
+                <div id="quill-article-content" class="rounded-2xl border border-slate-200"></div>
             </div>
 
             <div class="flex items-center gap-2 pt-2">
@@ -101,6 +102,7 @@
 
 </div>
 
+@push('scripts')
 <script>
     function previewArticleImage(input) {
         if (input.files && input.files[0]) {
@@ -111,5 +113,10 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        window.initRichEditor('quill-article-content', 'article_content', 'Tuliskan isi artikel edukasi kesehatan secara komprehensif...');
+    });
 </script>
+@endpush
 @endsection

@@ -877,6 +877,83 @@
         </div>
     </section>
 
+    <!-- 8.5. Galeri Dokumentasi & Tentang Kami Banner Section -->
+    <section class="py-20 bg-slate-50 relative border-t border-slate-200/60 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div class="space-y-2 max-w-xl" data-aos="fade-right">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-100 text-brand-800 text-[11px] font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-images"></i> Momen &amp; Fasilitas
+                    </span>
+                    <h2 class="text-2xl sm:text-4xl font-black font-heading text-slate-900 tracking-tight leading-tight">
+                        Dokumentasi Pelayanan &amp; Kehangatan Keluarga
+                    </h2>
+                    <p class="text-xs sm:text-sm text-slate-500">
+                        Potret nyata fasilitas modern, kelas edukasi ibu hamil, dan senyum bahagia para pasien di RSIA Restu Bunda.
+                    </p>
+                </div>
+                <div data-aos="fade-left">
+                    <a href="{{ route('gallery') }}" class="inline-flex items-center gap-2 px-5 py-3 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-xs shadow-sm border border-slate-200 transition active:scale-95 group">
+                        <span>Buka Semua Galeri ({{ \App\Models\Gallery::count() }})</span>
+                        <i class="fa-solid fa-arrow-right text-brand-600 transform group-hover:translate-x-1 transition"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Grid Preview -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($galleries as $gal)
+                    <a href="{{ route('gallery') }}" class="group block bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="{{ $loop->iteration * 75 }}">
+                        <div class="relative aspect-[4/3] bg-slate-100 overflow-hidden">
+                            <img src="{{ $gal->image_url }}" alt="{{ $gal->title }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-5">
+                                <span class="text-xs text-white font-bold inline-flex items-center gap-1.5">
+                                    <i class="fa-solid fa-expand"></i> Lihat Foto Lengkap
+                                </span>
+                            </div>
+                            <div class="absolute top-3 left-3">
+                                <span class="bg-slate-900/80 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-sm">
+                                    {{ $gal->category }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="font-extrabold text-slate-900 text-sm font-heading group-hover:text-brand-600 transition leading-snug line-clamp-2">
+                                {{ $gal->title }}
+                            </h3>
+                            @if($gal->description)
+                                <p class="text-xs text-slate-500 mt-1.5 line-clamp-2 leading-relaxed">
+                                    {!! strip_tags($gal->description) !!}
+                                </p>
+                            @endif
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+
+            <!-- Banner Mengenal Tentang Kami & Direksi -->
+            <div class="mt-14 rounded-3xl bg-gradient-to-r from-emerald-900 via-slate-900 to-slate-950 p-8 sm:p-10 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden" data-aos="fade-up">
+                <div class="space-y-3 max-w-2xl relative z-10">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-hospital"></i> Mengenal Kami Lebih Dekat
+                    </span>
+                    <h3 class="text-xl sm:text-3xl font-black font-heading leading-tight">
+                        Sejarah, Visi Misi, dan Jajaran Direksi RSIA Restu Bunda
+                    </h3>
+                    <p class="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
+                        Ketahui rekam jejak dedikasi kami dari sebuah klinik bersalin hingga berkembang menjadi Rumah Sakit Khusus Ibu dan Anak berakreditasi Paripurna.
+                    </p>
+                </div>
+                <div class="relative z-10 shrink-0">
+                    <a href="{{ route('about') }}" class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-brand-500 hover:from-emerald-600 hover:to-brand-600 text-white font-black text-xs sm:text-sm shadow-lg shadow-emerald-500/25 transition transform hover:scale-105 active:scale-95 flex items-center gap-2">
+                        <span>Baca Profil &amp; Direksi Lengkap</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- 9. Quick Booking Modal for Doctor Card Clicks -->
     <div id="bookingModal" onclick="if(event.target === this) closeBookingModal()" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm cursor-pointer">
         <div onclick="event.stopPropagation()" class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-emerald-100 relative animate-fade-in cursor-default">

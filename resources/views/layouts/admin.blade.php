@@ -46,6 +46,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+    <!-- Quill.js WYSIWYG Editor (Email-Style Rich Text) -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         h1, h2, h3, h4, h5, h6 { font-family: 'Outfit', sans-serif; }
@@ -65,6 +68,30 @@
         #admin-sidebar::-webkit-scrollbar-thumb {
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 9999px;
+        }
+        /* Quill toolbar custom theme */
+        .ql-toolbar.ql-snow {
+            border-top-left-radius: 0.85rem !important;
+            border-top-right-radius: 0.85rem !important;
+            border-color: #e2e8f0 !important;
+            background-color: #f8fafc !important;
+            padding: 8px 12px !important;
+        }
+        .ql-container.ql-snow {
+            border-bottom-left-radius: 0.85rem !important;
+            border-bottom-right-radius: 0.85rem !important;
+            border-color: #e2e8f0 !important;
+            background-color: #ffffff !important;
+            font-family: inherit !important;
+            font-size: 0.815rem !important;
+            line-height: 1.6 !important;
+        }
+        .ql-editor {
+            min-height: 140px;
+        }
+        .ql-editor.ql-blank::before {
+            color: #94a3b8 !important;
+            font-style: normal !important;
         }
     </style>
     @stack('styles')
@@ -114,6 +141,26 @@
                 <a href="{{ route('admin.facilities.index') }}" class="sidebar-link {{ request()->routeIs('admin.facilities.*') ? 'active' : '' }} flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-slate-300">
                     <i class="fa-solid fa-hospital-user text-sm w-4 text-center"></i>
                     <span>Fasilitas Rawat</span>
+                </a>
+
+                <!-- Module: Tentang Kami & Jajaran Direksi -->
+                <a href="{{ route('admin.about.index') }}" class="sidebar-link {{ request()->routeIs('admin.about.*') ? 'active' : '' }} flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-slate-300">
+                    <i class="fa-solid fa-landmark text-sm w-4 text-center"></i>
+                    <span>Tentang Kami &amp; Direksi</span>
+                </a>
+
+                <!-- Module: Galeri Dokumentasi -->
+                <a href="{{ route('admin.galleries.index') }}" class="sidebar-link {{ request()->routeIs('admin.galleries.*') ? 'active' : '' }} flex items-center justify-between px-3.5 py-3 rounded-xl transition text-slate-300">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-images text-sm w-4 text-center"></i>
+                        <span>Galeri Dokumentasi</span>
+                    </div>
+                    @php
+                        $galleryCount = \App\Models\Gallery::count();
+                    @endphp
+                    @if($galleryCount > 0)
+                        <span class="bg-emerald-600/70 text-emerald-100 text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $galleryCount }}</span>
+                    @endif
                 </a>
 
                 <a href="{{ route('admin.articles.index') }}" class="sidebar-link {{ request()->routeIs('admin.articles.*') ? 'active' : '' }} flex items-center gap-3 px-3.5 py-3 rounded-xl transition text-slate-300">
@@ -191,8 +238,6 @@
             </div>
         </header>
 
-        <!-- Page Alerts handled by SweetAlert2 (Auto-Dismiss) -->
-
         <!-- Dynamic Body -->
         <main class="p-4 sm:p-8 flex-1">
             @yield('content')
@@ -202,7 +247,7 @@
         <footer class="sticky bottom-0 z-20 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-4 sm:px-8 py-3 text-center text-xs text-slate-500 shadow-sm transition-all duration-200 flex flex-col sm:flex-row items-center justify-between gap-2">
             <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span class="font-medium text-center text-slate-600">RSIA Restu Bunda Management System</span>
+                <span class="font-medium text-slate-600">RSIA Restu Bunda Management System</span>
             </div>
             <div class="text-[11px] text-slate-400">
                 &copy; {{ date('Y') }} RSIA Restu Bunda. Seluruh hak cipta dilindungi.
@@ -212,6 +257,10 @@
 
     <!-- SweetAlert2 (Local, Offline-ready) -->
     <script src="{{ asset('js/sweetalert2.all.min.js') }}"></script>
+
+    <!-- Quill.js Rich Text Library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('admin-sidebar');
@@ -219,6 +268,49 @@
             sidebar.classList.toggle('-translate-x-full');
             overlay.classList.toggle('hidden');
         }
+
+        // Global Helper: Initialize Quill Editor (Like Email Composer)
+        window.initRichEditor = function(containerId, hiddenInputId, placeholder = 'Tuliskan narasi lengkap di sini...') {
+            const container = document.getElementById(containerId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+            if (!container || !hiddenInput) return null;
+
+            const quill = new Quill(container, {
+                theme: 'snow',
+                placeholder: placeholder,
+                modules: {
+                    toolbar: [
+                        [{ 'header': [2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                        [{ 'color': [] }, { 'background': [] }],
+                        [{ 'align': [] }],
+                        ['blockquote', 'link'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            // Set initial content if present
+            if (hiddenInput.value && hiddenInput.value.trim() !== '') {
+                quill.root.innerHTML = hiddenInput.value;
+            }
+
+            // Sync on change
+            quill.on('text-change', function() {
+                hiddenInput.value = quill.root.innerHTML;
+            });
+
+            // Also sync before form submit
+            const form = hiddenInput.closest('form');
+            if (form) {
+                form.addEventListener('submit', function() {
+                    hiddenInput.value = quill.root.innerHTML;
+                });
+            }
+
+            return quill;
+        };
 
         // Global Helper: Show Auto-Dismissing Toast Notification
         window.showToast = function(icon, title, message = '', timer = 2800) {

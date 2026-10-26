@@ -173,12 +173,13 @@
                 </a>
 
                 <!-- Desktop Navigation Links -->
-                <nav class="hidden lg:flex items-center space-x-8 text-sm font-semibold text-slate-600">
+                <nav class="hidden lg:flex items-center space-x-7 text-sm font-semibold text-slate-600">
                     <a href="{{ route('home') }}#beranda" class="hover:text-brand-600 transition">Beranda</a>
+                    <a href="{{ route('about') }}" class="hover:text-brand-600 transition {{ request()->routeIs('about') ? 'text-brand-600 font-bold' : '' }}">Tentang Kami</a>
                     <a href="{{ route('home') }}#layanan" class="hover:text-brand-600 transition">Layanan</a>
                     <a href="{{ route('home') }}#dokter" class="hover:text-brand-600 transition">Dokter</a>
                     <a href="{{ route('home') }}#fasilitas" class="hover:text-brand-600 transition">Fasilitas</a>
-                    <!-- <a href="{{ route('home') }}#partner" class="hover:text-brand-600 transition">Mitra</a> -->
+                    <a href="{{ route('gallery') }}" class="hover:text-brand-600 transition {{ request()->routeIs('gallery') ? 'text-brand-600 font-bold' : '' }}">Galeri</a>
                     <a href="{{ route('home') }}#artikel" class="hover:text-brand-600 transition">Artikel</a>
                     <a href="{{ route('home') }}#kontak" class="hover:text-brand-600 transition">Kontak</a>
                 </nav>
@@ -214,10 +215,11 @@
         <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-5 space-y-2">
             <a href="{{ route('home') }}#beranda" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Beranda</a>
+            <a href="{{ route('about') }}" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Tentang Kami &amp; Direksi</a>
             <a href="{{ route('home') }}#layanan" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Layanan Medis</a>
             <a href="{{ route('home') }}#dokter" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Dokter Spesialis</a>
             <a href="{{ route('home') }}#fasilitas" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Fasilitas Rawat</a>
-            <a href="{{ route('home') }}#partner" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Mitra &amp; Asuransi</a>
+            <a href="{{ route('gallery') }}" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Galeri Foto</a>
             <a href="{{ route('home') }}#artikel" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Artikel Kesehatan</a>
             <a href="{{ route('home') }}#kontak" class="block py-2 text-sm font-bold text-slate-700 hover:text-brand-600">Lokasi &amp; Kontak</a>
             <div class="pt-3 border-t border-slate-100 flex flex-col gap-2">
@@ -272,8 +274,10 @@
                 <div class="space-y-3">
                     <h4 class="text-white font-bold text-sm uppercase tracking-wider font-heading">Informasi</h4>
                     <ul class="space-y-2 text-xs text-emerald-100/70">
-                        <li><a href="#fasilitas" class="hover:text-white transition">Fasilitas Rawat Inap</a></li>
-                        <li><a href="#artikel" class="hover:text-white transition">Artikel &amp; Edukasi Ibu</a></li>
+                        <li><a href="{{ route('about') }}" class="hover:text-white transition">Tentang RSIA &amp; Direksi</a></li>
+                        <li><a href="{{ route('gallery') }}" class="hover:text-white transition">Galeri &amp; Dokumentasi</a></li>
+                        <li><a href="{{ route('home') }}#fasilitas" class="hover:text-white transition">Fasilitas Rawat Inap</a></li>
+                        <li><a href="{{ route('home') }}#artikel" class="hover:text-white transition">Artikel &amp; Edukasi Ibu</a></li>
                         <li><a href="{{ route('booking.check') }}" class="hover:text-white transition">Cek Status Janji Temu</a></li>
                     </ul>
                 </div>

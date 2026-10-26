@@ -324,5 +324,7 @@ class DatabaseSeeder extends Seeder
         foreach ($appointments as $apt) {
             Appointment::updateOrCreate(['booking_code' => $apt['booking_code']], $apt);
         }
+
+        $this->call(AboutAndGallerySeeder::class);
     }
 }

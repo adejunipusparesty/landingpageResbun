@@ -52,7 +52,8 @@ class AboutController extends Controller
         $request->validate([
             'name' => 'required|string|max:191',
             'position' => 'required|string|max:191',
-            'photo_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+            'photo_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'cropped_image_base64' => 'nullable|string',
         ]);
 
         $data = [
@@ -63,7 +64,20 @@ class AboutController extends Controller
             'is_active' => $request->has('is_active') ? true : false,
         ];
 
-        if ($request->hasFile('photo_file')) {
+        if ($request->filled('cropped_image_base64')) {
+            $dataImg = $request->input('cropped_image_base64');
+            if (preg_match('/^data:image\/(\w+);base64,/', $dataImg, $type)) {
+                $dataImg = substr($dataImg, strpos($dataImg, ',') + 1);
+                $ext = strtolower($type[1]);
+                if ($ext === 'jpeg') $ext = 'jpg';
+                $decoded = base64_decode($dataImg);
+                if ($decoded !== false) {
+                    $filename = 'director_' . time() . '_' . uniqid() . '.' . $ext;
+                    file_put_contents(public_path('images/' . $filename), $decoded);
+                    $data['photo'] = $filename;
+                }
+            }
+        } elseif ($request->hasFile('photo_file')) {
             $file = $request->file('photo_file');
             $filename = 'director_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images'), $filename);
@@ -84,7 +98,8 @@ class AboutController extends Controller
         $request->validate([
             'name' => 'required|string|max:191',
             'position' => 'required|string|max:191',
-            'photo_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:3072',
+            'photo_file' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'cropped_image_base64' => 'nullable|string',
         ]);
 
         $data = [
@@ -95,7 +110,20 @@ class AboutController extends Controller
             'is_active' => $request->has('is_active') ? true : false,
         ];
 
-        if ($request->hasFile('photo_file')) {
+        if ($request->filled('cropped_image_base64')) {
+            $dataImg = $request->input('cropped_image_base64');
+            if (preg_match('/^data:image\/(\w+);base64,/', $dataImg, $type)) {
+                $dataImg = substr($dataImg, strpos($dataImg, ',') + 1);
+                $ext = strtolower($type[1]);
+                if ($ext === 'jpeg') $ext = 'jpg';
+                $decoded = base64_decode($dataImg);
+                if ($decoded !== false) {
+                    $filename = 'director_' . time() . '_' . uniqid() . '.' . $ext;
+                    file_put_contents(public_path('images/' . $filename), $decoded);
+                    $data['photo'] = $filename;
+                }
+            }
+        } elseif ($request->hasFile('photo_file')) {
             $file = $request->file('photo_file');
             $filename = 'director_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images'), $filename);

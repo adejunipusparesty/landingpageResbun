@@ -3,6 +3,17 @@
 @section('title', 'Kelola Tentang Kami & Direksi - RSIA Restu Bunda')
 @section('page-title', 'Tentang Kami & Jajaran Direksi')
 
+@push('styles')
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css">
+    <style>
+        .cropper-view-box,
+        .cropper-face {
+            border-radius: 1rem;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="space-y-6">
 
@@ -224,17 +235,40 @@
         <form action="{{ route('admin.about.directors.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4 text-xs">
             @csrf
 
-            <!-- Upload Foto Preview -->
-            <div>
-                <label class="block font-bold text-slate-700 mb-1.5">Foto Resmi Direksi</label>
+            <!-- Hidden Input for Cropped Image Data -->
+            <input type="hidden" name="cropped_image_base64" id="add_cropped_image_base64">
+
+            <!-- Upload Foto Preview & Crop -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                <div class="flex items-center justify-between">
+                    <label class="block font-bold text-slate-800 text-xs uppercase tracking-wider">
+                        <i class="fa-solid fa-camera text-brand-600 mr-1"></i> Foto Resmi Direksi
+                    </label>
+                    <span id="addCropStatusBadge" class="hidden px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                        <i class="fa-solid fa-check mr-1"></i> Foto Sudah Di-crop (1:1)
+                    </span>
+                </div>
+
                 <div class="flex items-center gap-4">
-                    <img id="addDirectorPreview" src="{{ asset('images/logo.png') }}" class="w-16 h-16 rounded-2xl object-cover bg-slate-100 border border-slate-200 shrink-0">
-                    <div class="space-y-1">
-                        <label for="add_photo_file" class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] transition">
-                            <i class="fa-solid fa-upload"></i> Pilih Foto
-                        </label>
-                        <input type="file" id="add_photo_file" name="photo_file" accept="image/*" class="hidden" onchange="previewAddDirector(this)">
-                        <p class="text-[10px] text-slate-400">Rasio formal 1:1 atau pasfoto.</p>
+                    <div class="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-emerald-500/30 bg-slate-100 shrink-0 shadow-sm flex items-center justify-center">
+                        <img id="addDirectorPreview" src="{{ asset('images/logo.png') }}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label for="add_photo_file" class="cursor-pointer inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm transition active:scale-95">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>Pilih &amp; Crop Foto</span>
+                            </label>
+
+                            <button type="button" id="addReCropBtn" onclick="openDirectorCropModal('add')" class="hidden px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs transition items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-crop-simple text-brand-600"></i>
+                                <span>Sesuaikan Ulang</span>
+                            </button>
+                        </div>
+                        <input type="file" id="add_photo_file" name="photo_file" accept="image/*" class="hidden" onchange="initDirectorPhotoCrop(this, 'add')">
+                        <p class="text-[11px] text-slate-400 leading-snug">
+                            Format JPG, PNG, WEBP. Pemotong foto interaktif (1:1) otomatis muncul agar posisi kepala direksi simetris &amp; rapi.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -288,17 +322,40 @@
             @csrf
             @method('PUT')
 
-            <!-- Upload Foto Preview -->
-            <div>
-                <label class="block font-bold text-slate-700 mb-1.5">Foto Resmi Direksi</label>
+            <!-- Hidden Input for Cropped Image Data -->
+            <input type="hidden" name="cropped_image_base64" id="edit_cropped_image_base64">
+
+            <!-- Upload Foto Preview & Crop -->
+            <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-3">
+                <div class="flex items-center justify-between">
+                    <label class="block font-bold text-slate-800 text-xs uppercase tracking-wider">
+                        <i class="fa-solid fa-camera text-brand-600 mr-1"></i> Foto Resmi Direksi
+                    </label>
+                    <span id="editCropStatusBadge" class="hidden px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                        <i class="fa-solid fa-check mr-1"></i> Foto Baru Siap (1:1)
+                    </span>
+                </div>
+
                 <div class="flex items-center gap-4">
-                    <img id="editDirectorPreview" src="{{ asset('images/logo.png') }}" class="w-16 h-16 rounded-2xl object-cover bg-slate-100 border border-slate-200 shrink-0">
-                    <div class="space-y-1">
-                        <label for="edit_photo_file" class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] transition">
-                            <i class="fa-solid fa-upload"></i> Ganti Foto
-                        </label>
-                        <input type="file" id="edit_photo_file" name="photo_file" accept="image/*" class="hidden" onchange="previewEditDirector(this)">
-                        <p class="text-[10px] text-slate-400">Kosongkan jika tidak ingin mengganti foto.</p>
+                    <div class="relative w-20 h-20 rounded-2xl overflow-hidden border-2 border-emerald-500/30 bg-slate-100 shrink-0 shadow-sm flex items-center justify-center">
+                        <img id="editDirectorPreview" src="{{ asset('images/logo.png') }}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="space-y-2 flex-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label for="edit_photo_file" class="cursor-pointer inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-sm transition active:scale-95">
+                                <i class="fa-solid fa-cloud-arrow-up"></i>
+                                <span>Ganti &amp; Crop Foto</span>
+                            </label>
+
+                            <button type="button" id="editReCropBtn" onclick="openDirectorCropModal('edit')" class="hidden px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-100 text-slate-700 font-bold text-xs transition items-center gap-1.5 shadow-sm">
+                                <i class="fa-solid fa-crop-simple text-brand-600"></i>
+                                <span>Sesuaikan Ulang</span>
+                            </button>
+                        </div>
+                        <input type="file" id="edit_photo_file" name="photo_file" accept="image/*" class="hidden" onchange="initDirectorPhotoCrop(this, 'edit')">
+                        <p class="text-[11px] text-slate-500 leading-snug">
+                            Kosongkan jika tidak ingin mengganti foto, atau klik untuk memilih foto baru dan menyesuaikan posisinya.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -335,6 +392,78 @@
                 <button type="submit" class="py-2.5 px-5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold shadow transition">Simpan Perubahan</button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal Interactive Crop Foto Direksi -->
+<div id="directorCropModal" class="fixed inset-0 z-[70] hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-fade-in">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-6 shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]">
+        <!-- Header -->
+        <div class="flex items-center justify-between pb-3.5 border-b border-slate-100">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-emerald-100 text-brand-700 flex items-center justify-center font-bold text-lg shadow-sm">
+                    <i class="fa-solid fa-crop-simple"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-slate-900 font-heading">Sesuaikan &amp; Crop Foto Direksi</h3>
+                    <p class="text-[11px] text-slate-500">Atur zoom dan posisi agar wajah direksi simetris &amp; sejajar proporsional</p>
+                </div>
+            </div>
+            <button type="button" onclick="closeDirectorCropModal()" class="p-2 text-slate-400 hover:text-slate-600 rounded-xl hover:bg-slate-100 transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Viewport Area -->
+        <div class="py-4 flex-1 overflow-hidden flex flex-col items-center justify-center">
+            <div class="w-full max-h-[50vh] flex items-center justify-center overflow-hidden bg-slate-900 rounded-2xl relative">
+                <img id="directorCropImage" src="" alt="Gambar untuk di-crop" class="max-w-full max-h-[50vh] block">
+                
+                <!-- Guideline Oval: Membantu memposisikan kepala direksi pada tinggi yang sama -->
+                <div class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-30">
+                    <div class="w-48 h-56 rounded-[50%] border-2 border-dashed border-emerald-400"></div>
+                </div>
+            </div>
+            <p class="text-[11px] text-slate-400 mt-2.5 text-center">
+                <i class="fa-solid fa-circle-info text-brand-600 mr-1"></i>
+                Gunakan scroll mouse atau tombol zoom di bawah, lalu geser posisi wajah agar berada di area tengah lingkaran.
+            </p>
+        </div>
+
+        <!-- Toolbar & Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-slate-100">
+            <!-- Crop Controls -->
+            <div class="flex items-center gap-1.5 w-full sm:w-auto justify-center">
+                <button type="button" onclick="zoomDirectorCropper(0.1)" class="p-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1" title="Perbesar (Zoom In)">
+                    <i class="fa-solid fa-magnifying-glass-plus"></i>
+                    <span class="text-[10px]">Zoom In</span>
+                </button>
+                <button type="button" onclick="zoomDirectorCropper(-0.1)" class="p-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition flex items-center gap-1" title="Perkecil (Zoom Out)">
+                    <i class="fa-solid fa-magnifying-glass-minus"></i>
+                    <span class="text-[10px]">Zoom Out</span>
+                </button>
+                <button type="button" onclick="rotateDirectorCropper(-90)" class="p-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" title="Putar 90° Kiri">
+                    <i class="fa-solid fa-rotate-left"></i>
+                </button>
+                <button type="button" onclick="rotateDirectorCropper(90)" class="p-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" title="Putar 90° Kanan">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+                <button type="button" onclick="resetDirectorCropper()" class="p-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition" title="Reset Posisi">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                </button>
+            </div>
+
+            <!-- Submit Buttons -->
+            <div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+                <button type="button" onclick="useDirectorOriginalPhoto()" class="py-2.5 px-4 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-bold transition">
+                    Pakai Asli
+                </button>
+                <button type="button" onclick="applyDirectorCroppedImage()" class="py-2.5 px-5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-extrabold shadow-md shadow-brand-600/20 transition flex items-center gap-1.5 active:scale-95">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Terapkan Hasil Crop</span>
+                </button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -404,6 +533,19 @@
 
     // Modals
     function openAddDirectorModal() {
+        document.getElementById('add_cropped_image_base64').value = '';
+        document.getElementById('add_photo_file').value = '';
+        document.getElementById('addDirectorPreview').src = "{{ asset('images/logo.png') }}";
+        addOriginalImageSrc = null;
+
+        const badge = document.getElementById('addCropStatusBadge');
+        if (badge) badge.classList.add('hidden');
+        const reCropBtn = document.getElementById('addReCropBtn');
+        if (reCropBtn) {
+            reCropBtn.classList.add('hidden');
+            reCropBtn.classList.remove('inline-flex');
+        }
+
         const modal = document.getElementById('addDirectorModal');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
@@ -424,12 +566,27 @@
         document.getElementById('edit_order_num').value = director.order_num || 0;
         document.getElementById('edit_is_active').checked = !!director.is_active;
         document.getElementById('edit_director_bio').value = director.bio || '';
+        document.getElementById('edit_cropped_image_base64').value = '';
+        document.getElementById('edit_photo_file').value = '';
+        editOriginalImageSrc = null;
 
+        const badge = document.getElementById('editCropStatusBadge');
+        if (badge) badge.classList.add('hidden');
+
+        const reCropBtn = document.getElementById('editReCropBtn');
         const previewImg = document.getElementById('editDirectorPreview');
         if (director.photo) {
             previewImg.src = '/images/' + director.photo;
+            if (reCropBtn) {
+                reCropBtn.classList.remove('hidden');
+                reCropBtn.classList.add('inline-flex');
+            }
         } else {
-            previewImg.src = '/images/logo.png';
+            previewImg.src = '{{ asset('images/logo.png') }}';
+            if (reCropBtn) {
+                reCropBtn.classList.add('hidden');
+                reCropBtn.classList.remove('inline-flex');
+            }
         }
 
         if (quillEditBio) {
@@ -446,6 +603,154 @@
         modal.classList.add('hidden');
         modal.classList.remove('flex');
     }
+
+    // ==========================================
+    // CROPPER.JS HANDLERS FOR DIRECTORS
+    // ==========================================
+    let directorCropper = null;
+    let currentDirectorCropTarget = 'add'; // 'add' or 'edit'
+    let addOriginalImageSrc = null;
+    let editOriginalImageSrc = null;
+
+    function initDirectorPhotoCrop(input, target) {
+        if (input.files && input.files[0]) {
+            const file = input.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                if (target === 'add') {
+                    addOriginalImageSrc = e.target.result;
+                } else {
+                    editOriginalImageSrc = e.target.result;
+                }
+                openDirectorCropModal(target, e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function openDirectorCropModal(target, imgSrc) {
+        currentDirectorCropTarget = target;
+        let src = imgSrc;
+        if (!src) {
+            if (target === 'add') {
+                src = addOriginalImageSrc || document.getElementById('addDirectorPreview').src;
+            } else {
+                src = editOriginalImageSrc || document.getElementById('editDirectorPreview').src;
+            }
+        }
+
+        const cropImg = document.getElementById('directorCropImage');
+        cropImg.src = src;
+
+        const modal = document.getElementById('directorCropModal');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        if (directorCropper) {
+            directorCropper.destroy();
+        }
+
+        setTimeout(() => {
+            directorCropper = new Cropper(cropImg, {
+                aspectRatio: 1, // 1:1 Square
+                viewMode: 1,
+                dragMode: 'move',
+                autoCropArea: 0.95,
+                restore: false,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                background: false
+            });
+        }, 120);
+    }
+
+    function closeDirectorCropModal() {
+        const modal = document.getElementById('directorCropModal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        if (directorCropper) {
+            directorCropper.destroy();
+            directorCropper = null;
+        }
+    }
+
+    function zoomDirectorCropper(ratio) {
+        if (directorCropper) directorCropper.zoom(ratio);
+    }
+
+    function rotateDirectorCropper(degree) {
+        if (directorCropper) directorCropper.rotate(degree);
+    }
+
+    function resetDirectorCropper() {
+        if (directorCropper) directorCropper.reset();
+    }
+
+    function applyDirectorCroppedImage() {
+        if (!directorCropper) return;
+        const canvas = directorCropper.getCroppedCanvas({
+            width: 600,
+            height: 600,
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high'
+        });
+
+        if (canvas) {
+            const croppedDataUrl = canvas.toDataURL('image/png');
+            if (currentDirectorCropTarget === 'add') {
+                document.getElementById('addDirectorPreview').src = croppedDataUrl;
+                document.getElementById('add_cropped_image_base64').value = croppedDataUrl;
+
+                const statusBadge = document.getElementById('addCropStatusBadge');
+                if (statusBadge) {
+                    statusBadge.classList.remove('hidden');
+                    statusBadge.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Foto Sudah Di-crop (1:1)';
+                }
+                const reCropBtn = document.getElementById('addReCropBtn');
+                if (reCropBtn) {
+                    reCropBtn.classList.remove('hidden');
+                    reCropBtn.classList.add('inline-flex');
+                }
+            } else {
+                document.getElementById('editDirectorPreview').src = croppedDataUrl;
+                document.getElementById('edit_cropped_image_base64').value = croppedDataUrl;
+
+                const statusBadge = document.getElementById('editCropStatusBadge');
+                if (statusBadge) {
+                    statusBadge.classList.remove('hidden');
+                    statusBadge.innerHTML = '<i class="fa-solid fa-check mr-1"></i> Foto Baru Di-crop (1:1)';
+                }
+                const reCropBtn = document.getElementById('editReCropBtn');
+                if (reCropBtn) {
+                    reCropBtn.classList.remove('hidden');
+                    reCropBtn.classList.add('inline-flex');
+                }
+            }
+
+            closeDirectorCropModal();
+        }
+    }
+
+    function useDirectorOriginalPhoto() {
+        if (currentDirectorCropTarget === 'add') {
+            if (addOriginalImageSrc) {
+                document.getElementById('addDirectorPreview').src = addOriginalImageSrc;
+                document.getElementById('add_cropped_image_base64').value = '';
+            }
+        } else {
+            if (editOriginalImageSrc) {
+                document.getElementById('editDirectorPreview').src = editOriginalImageSrc;
+                document.getElementById('edit_cropped_image_base64').value = '';
+            }
+        }
+        closeDirectorCropModal();
+    }
 </script>
+<!-- Cropper.js JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 @endpush
 @endsection
